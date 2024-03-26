@@ -1,0 +1,196 @@
+Port Forwarding OR Port Mapping:
+===================================
+
+By default an application on docker container is avaibale on its exposed port.
+
+It is the users internet that cannot reach the container port
+
+For this we have do port forwarding or mapping in docker
+
+i.e. we have to map a VM free system port with container port
+
+example = 8989:80
+
+systemport:containerport
+
+> If a container is already created, we canot do port forwarding for the container
+
+> port forwarding will be applied at the docker run comamnd itself
+
+> flag for port forwarding (-p)
+
+# docker run --name web1 -d -p 8989:80 nginx
+
+
+> if you want docker to do port mapping then use flag -P
+
+# docker run --name web2 -d -P httpd
+
+=============================================
+
+Dockerfile:
+================
+
+It is a simple file with no extension, it has the name dockerfile or Dockerfile 
+
+No programing or scripting language is used to write this file
+
+We just use keywords given to us by Docker and pass arguments/commands to these keywords
+
+Syntax:  keyword argument/command
+
+# to write comments
+
+1. FROM 
+This is the first keyword in the dockerfile 
+With this keyword we will mention the name of the any Docker Base image over which we want to customization
+
+2. ENV 
+This keyword can be repeated multiple times in the dockerfile
+Using this keyword we will define environment variables and its values
+These variables can further be used in other steps of the dockerfile
+
+3. LABEL
+It is not mandatory, with this we give the key=value. It is like metadata/information about dockerfile 
+
+4. RUN 
+This keyword can be repeated multiple times in the dockerfile 
+With this keyword we will give Linux command to install/upgrade packages
+When a container is launched and you want a set of commands or packages to be laready executed and present on the container
+You can mention that in dockerfile using RUN keyword 
+
+5. COPY 
+Can copy any file from the Docker host on to the containers directory
+However it cannot copy .tar files on the containers
+
+6. ADD 
+Can copy any file from the Docker host on to the containers directory
+can copy .tar files on the container directory 
+
+7. EXPOSE 
+With this keyword we will mention target port of the container 
+
+8. Volume 
+
+With this keyword we will mention the directory of the container that will preserve the data on the host machine
+
+9. CMD
+
+With this keyword we will mention a command that will run after  the container is launched 
+However, this command can be replaced by a new command that is passed by the admin with docker run command
+
+10. ENTRYPOINT
+
+With this keyword we will mention a command that will run after  the container is launched 
+
+However, this command CANNOT be replaced by a new command that is passed by the admin with docker run command
+New command get appended as an argument to the EntryPoint command
+
+11. WORKDIR
+This keyword is written in the beginning of the dockerfile after FROM keyword
+This keyword will create a working directory on the container
+Then rest of dockerfile commands will run in this working directory by default
+============================================
+
+Example:
+============================================
+
+FROM ubuntu
+RUN apt-get update
+RUN apt-get install nginx -y
+COPY index.html /var/www/html/
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+build dockerfile into an Image
+
+# docker build -t myimage01 .
+
+# docker images
+
+Push the image in docker hub
+==================================
+
+From host machine loginto dockerhub
+
+# docker login
+
+username of dockerhub:
+password
+
+Need to chnage name of the image and add repository name where it has to be pushed in docker hub
+
+docker tag oldimageName dockerhubaccountName/imagename
+
+# docker tag myimage01 sonal04/myimage01
+
+Push the image
+
+# docker push sonal04/myimage01
+
+=================================
+
+Docker Volumes:
+
+It is a concept in which we preserve the data of container in the volumes created on docker host
+
+Whenver a containe ris deleted, the data in the container is also lost. In order to overcome this problem, we have docker volumes
+
+Volumes needs to be mounted on the container directory. whatever is there in the container directory will be preserved on the volume directory
+
+Volume mapping has to be done, during container runtime.
+
+Named volumes
+
+1. Create a docker volume that will preserve the data of a container
+
+> Create a named volume
+
+# docker volume ls
+# docker volume create myvol
+
+> where is the volume created
+
+# docker volume inspect myvol
+
+/var/lib/docker/volumes/myvol/_data
+
+> mount the volume on the container directory
+
+ docker run -it --name cont1 -v myvol:/tmp ubuntu
+
+> preserve data from contaienr to volume
+
+create some files in container and come out of container
+
+> delete container.. data will be there in volume directory
+
+# docker rm -f cont1
+
+# cd /var/lib/docker/volumes/myvol/_data
+
+=============================================
+
+2. Place files from volume on to a container
+
+> go to volume directory, it will have some files
+
+> create a container and mount the volume
+
+docker run -it --name cont1 -v myvol:/tmp ubuntu
+
+> you will observe volume data is there on contaienr sdirectory
+
+
+try out latter
+
+
+create a volume and mount on a container1
+store some files on the volume
+create container2 mapping same volume
+make chnages int eh container directory, you wills ee chnages available on second cont also.
+
+==============================================
+
+
+
