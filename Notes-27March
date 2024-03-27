@@ -1,3 +1,83 @@
+
+
+YAML : we will use this for writing code in docker compose tool, kubernetes and Ansible 
+
+YAML : yet another markup language or YAML aint a markup language 
+
+YAML is not a programming language and it not a scripting language 
+
+It is a file format to save the data 
+
+It is very easy to write and easy to understand 
+
+Syntax :
+
+key: value 
+
+key : it is given by the tool 
+value is given by user 
+value can be a string, number or boolean
+
+A  key: value  in YAML is called as a MAP 
+
+A key can store a single value or list of value 
+
+YAML is case sensitive and space sensitive 
+
+Example : A key storing single value 
+==============================================
+---
+Company: StarAgile
+Trainer: Sonal
+Training: DevOps 
+Timing: 8PM
+Days: weekdays
+...
+
+Use https://www.yamllint.com/  to check YAML code format is correct or Note
+
+
+Example 2: A key storing multiple values
+==============================================
+---
+Company: StarAgile
+Trainers:
+   - Sonal
+   - Ravi
+   - Marc
+   - John
+Trainings:
+   - DevOps
+   - aws
+   - Azure
+   - GCP
+Days: ['weekday','weekend']
+
+...
+
+Example 3: A key storing again a key and value(map)
+==============================================
+---
+Company: StarAgile
+Trainers:
+   - name: sonal Mittal
+     email: admin@gmail.come
+     phone: 2535345646
+   - name: Marc 
+     email: sfete
+     phone: 14234353
+     
+
+...
+
+==========================================================================
+
+
+
+
+
+
+
 Docker Swarm
 *****************************
 
