@@ -1,0 +1,151 @@
+26 March
+=============================
+
+
+
+We can access the application runnign on the container in 2 ways:
+
+1. Docker exec command 
+
+2. via the browser
+
+Port Mapping
+
+It is done with docker run command 
+If for a container we ahve not done port mapping.. then you cannot access it .. you cannot do port mapping after the container has been created
+
+It is waste.. delete the container and create again
+
+Port mapping is represented by -p or -P
+
+
+
+Demo: Convert a container into a Custom Image 
+============================================================
+Step 1: We will create an Ubuntu(OS) container 
+
+Step 2: We will go inside the container (-it)
+
+Step 3: We will install some package on the container 
+
+step 4: come out of container 
+
+step 5: Commit a container to an Image ==> our own image 
+
+docker commit containername imagename 
+
+Step 6: Push the image to docker Hub -> our own registry 
+
+docker push myimage01
+
+docker push sonal04/myimage01
+ 
+Step 7: From Docker Host login to docker hub
+
+Login with your Docker ID to push and pull images from Docker Hub
+
+Step 8: Change Image name so that we can push it into our own docker hub repository 
+
+docker tag olsImagename dockerhubaccount/imagename
+
+docker tag myimage01 sonal04/myimage01
+
+Step 9: Push the image to docker Hub -> our own registry 
+
+docker push sonal04/myimage01
+
+
+DockerFile 
+=====================
+Dockerfile is a simple text file 
+It is a manifest file of docker tool only
+This file when built, you will get a custom Image 
+
+The name of this file is going to be Dockerfile or dockerfile 
+
+No programing language and no scripting language 
+
+syntax: 
+
+keyword command/argument
+========================================
+
+FROM : what will be the Base image over which we will do customization 
+This is always the first line of dockerfile 
+This is mandatory and is not repeated 
+
+RUN : with this keyword we can pass any linux commands to install/upgrade any packages on the container 
+that has to be pre-executed on the container .
+RUN keyword can be repeated multiple times
+
+COPY : copy a file from host machine to container directory 
+
+ADD : copy a file from host machine to container directory 
+Copy file from remote server to container directory 
+If we have to copy tar files on the container we will use ADD keyword 
+
+EXPOSE : we will give port number to which container will be exposed 
+
+CMD : When the container is launched if we want a command to conitnue to run on the container then we use this keyword
+
+EntryPOINT: When the container is launched if we want a command to conitnue to run on the container then we use this keyword
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
