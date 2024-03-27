@@ -28,6 +28,42 @@ systemport:containerport
 
 =============================================
 
+Demo: Convert a container into a Custom Image 
+============================================================
+Step 1: We will create an Ubuntu(OS) container 
+
+Step 2: We will go inside the container (-it)
+
+Step 3: We will install some package on the container 
+
+step 4: come out of container 
+
+step 5: Commit a container to an Image ==> our own image 
+
+docker commit containername imagename 
+
+Step 6: Push the image to docker Hub -> our own registry 
+
+docker push myimage01
+
+docker push sonal04/myimage01
+ 
+Step 7: From Docker Host login to docker hub
+
+Login with your Docker ID to push and pull images from Docker Hub
+
+Step 8: Change Image name so that we can push it into our own docker hub repository 
+
+docker tag olsImagename dockerhubaccount/imagename
+
+docker tag myimage01 sonal04/myimage01
+
+Step 9: Push the image to docker Hub -> our own registry 
+
+docker push sonal04/myimage01
+
+=====================================================================
+
 Dockerfile:
 ================
 
