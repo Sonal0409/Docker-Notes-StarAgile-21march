@@ -1,0 +1,94 @@
+Docker compose is a tool to be installed on Docker host
+
+Install Docker-compose on Lab
+
+ curl -SL https://github.com/docker/compose/releases/download/v2.5.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+ sudo chmod +x /usr/local/bin/docker-compose
+  docker-compose --version
+
+====================
+
+Docker compose DEMO:
+=======================
+
+Create a compose file
+
+mkdir composedemo
+cd composedemo
+vim docker-compose.yml
+
+version: '3'
+services:
+ compose-test:
+  image: centos:7
+  networks:
+   - compnet
+  command: sleep infinity
+  depends_on:
+   - compose-db
+ compose-db:
+  image: redis
+  ports:
+   - '6379:6379'
+  networks:
+   - compnet
+networks:
+ compnet:
+
+
+Press esc :wq!
+
+# docker-compose up -d
+
+# docker-compose ps
+
+===============================
+
+$ docker-compose exec compose-test /bin/bash 
+
+OR
+
+$ docker-compose exec compose-test sh
+
+On the test container we need to ping DB container (6379)
+
+To do this we need to install ncat package
+
+$ yum install nc -y
+
+netcat (often abbreviated to nc) is a computer networking utility for reading from and writing to network connections using TCP or UDP.
+
+
+
+
+$ nc compose-db 6379
+
+
+
+
+ping
++PONG
+
+set name sonal
++OK
+
+set day sunday
++OK
+
+get name
+$5
+sonal
+
+get day
+$6
+sunday
+
+Ctl C
+
+Exit ⇒ out of container
+
+Stop & Delete all containers created using docker-compose file
+
+$ docker-compose down
+
+===================================
