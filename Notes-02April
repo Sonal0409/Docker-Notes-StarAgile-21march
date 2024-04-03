@@ -1,0 +1,79 @@
+================================
+
+Create a pod in kubernetes:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+  labels:
+    author: sonal
+    env: dev
+    app: webserver
+spec:
+ containers:
+  - name: c1
+    image: nginx
+
+================================
+
+MultiContainer Pod
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+  labels:
+    author: sonal
+    env: dev
+    app: webserver
+spec:
+ containers:
+  - name: c1
+    image: nginx
+  - name: c2
+    image: tomcat
+  - name: c3
+    image: ubuntu
+    command: ["bash","-c", "sleep 6000"]
+
+============================================
+
+Create a Deployment object which will create 3 replicas of my sample Image
+
+Deployment --> Replicaset --> Pods--> Containers
+
+
+In the YAML of Deployment object:
+
+2 main sections:
+
+spec: specify replicas
+ 
+ template: pod template
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: mydeploy
+spec:
+ replicas: 3
+ selector:
+  matchLabels:
+   app: kubeserve
+ template:
+  metadata:
+   labels:
+    app: kubeserve
+  spec:
+   containers:
+    - name: app
+      image: leaddevops/kubeserve:v1
+
+
+
+
+==========================================
+
