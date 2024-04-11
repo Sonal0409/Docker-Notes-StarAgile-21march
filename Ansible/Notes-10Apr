@@ -1,0 +1,63 @@
+
+Variables in Ansible:
+
+
+- name: Deployment of HTML file on Apache server
+  hosts: webserver
+  become: true
+  become_user: root
+  vars: # here you can declare variables
+   pkg_name: httpd
+  tasks:
+  - name: Install package {{pkg_name}}
+    package: name={{pkg_name}} state=present
+  - name: Start the {{pkg_name}} service
+    service: name={{pkg_name}} state=started
+
+
+Loop and variables:
+
+- name: Install multiple packages
+  hosts: webserver
+  become: true
+  become_user: root
+  vars:
+   user_name:
+    - user01
+    - user02
+    - user03
+   pkg_name:
+    - tomcat
+    - httpd
+    - php
+  tasks:
+  - name: Install multiple packages on the host server
+    package: name={{item}}  state=present
+    loop:
+     - git
+     - docker
+     - tree
+     - nano
+     - vim
+  - name: Create multiple users
+    user: name={{item}} state=present
+    loop: "{{user_name}}"
+  - name: install unique package
+    package: name={{pkg_name[2]}} state=present
+
+
+Ansible Roles:
+
+cd roles
+# sudo ansible-galaxy init demorole
+
+Add tasks, variables & files in requried directories and complete the role.
+
+- name: Execution of Roles
+  hosts: webserver
+  become: true
+  become_user: root
+  roles:
+   - tomcat
+   - demorole
+
