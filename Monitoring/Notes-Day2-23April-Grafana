@@ -1,0 +1,117 @@
+HELM:
+=====================
+
+On linux OS we have package managers like yum or apt which we use to isntall package
+
+ like:  yum install git
+          apt-get install httpd
+
+
+Helm is a package manager of kubernetes which comes with set of YAML files (pre-written) which when executed will install softwares or tools on the kubernetes cluster
+
+So if we have to install open source tools or applications on kubernetes cluster we can use HELM
+
+
+Install using Helm
+===========================
+Add helm repo
+
+# helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+Update helm repo
+
+# helm repo update
+
+Install helm
+
+# helm install prometheus prometheus-community/prometheus
+
+Expose Prometheus Service
+
+This is required to access prometheus-server using your browser.
+
+# kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-ext
+
+In the kubernetes master node run the queries
+
+# kubectl get pods
+
+# kubectl get svc
+
+Go to the browser:
+
+take the public ip of the masternode and nodeport number
+
+example: http://34.170.213.215:31753/
+
+You will see prometheous dashboard
+
+Now Execute below queries to complete assignment:
+
+kube_pod_container_resource_limits
+
+
+Grafana:
+
+Install using Helm
+Add helm repo
+helm repo add grafana https://grafana.github.io/helm-charts
+
+Update helm repo
+helm repo update
+
+Install helm
+helm install grafana grafana/grafana
+
+
+Username is admin and get password by running below command:
+
+kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+
+
+wHJVMWzo3fifms3VmhjOBp8gtuhVoUGAGx7fqkHt
+
+
+Expose Grafana Service
+kubectl expose service grafana --type=NodePort --target-port=3000 --name=grafana-ext
+
+
+Loginto grafana: username will be admin and password will be the text that we copied earlier
+
+Step 1: In grafana we will now setup the Data source:
+==================================
+Click on Data source --> scroll down -- to add prometheous URL field. Copy the prometheous dashboard URL -> https://ipaddress:portnumber
+
+Scroll down --> click on save and test
+
+Grafana will now be able to fetch data from prometheous
+
+Step 2: Import dashboard to display the Data
+
+Go to Homepage of grafana --> click on Dashboards --> Click on Import dashboard --> the id of dashboard is 16734 and click on load
+
+Scroll down and select prometheous data source -> click on Import
+
+
+
+Assignment 1:
+====================
+Use dashboard, 16734 and add the alert
+
+Assignment 2: Create your own dashboard
+=====================
+Panel 1 - CPU utilization
+
+avg(100 - (avg by (node) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100))
+
+Panel 2: Memory
+
+(sum (node_memory_MemTotal_bytes) - sum (node_memory_MemAvailable_bytes)) / sum (node_memory_MemTotal_bytes) * 100
+
+panel 3- file storage
+
+node_disk_filesystem_info
+
+
+
+
